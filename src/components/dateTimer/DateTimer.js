@@ -3,7 +3,7 @@ import React from 'react'
 import {TextDate, SpreaderBar, TextContainer} from './styles'
 
 
-export const Date = ({eventDate}) => {
+export const DateTimer = ({eventDate}) => {
     return(
         <div>
             <TextContainer>

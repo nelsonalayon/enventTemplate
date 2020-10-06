@@ -1,5 +1,6 @@
 import React from "react";
 
+
 // import "./App.css";
 import { PrincipalButton } from "./components/button/TemplateButton";
 
@@ -9,7 +10,7 @@ import { Sponsor } from "./components/sponsor/Sponsor";
 import { Navbar } from "./components/navbar/Navbar";
 import { SectionSmall } from "./components/sectionInfoSmall/SectionSmall";
 import { SectionLarge } from "./components/sectionInfoLarge/SectionLarge";
-import { Date } from "./components/date/Date";
+import { DateTimer } from "./components/dateTimer/DateTimer";
 import {
   Intro,
   TemplateContainer,
@@ -21,10 +22,10 @@ import {
 import { Chronometer } from "./components/chronometer/Chronometer";
 import { GlobalStyle } from "./GlobalStyles";
 
-// datos para el componente countdown
 
-const TIPE_OF_DATE = "Day";
-const NUMBER = "14";
+// imagen del evento
+const EVENT_IMAGE = "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+
 
 // Datos para el componente del speaker
 
@@ -53,67 +54,79 @@ const SECTION_INFO = "20 DE OCTUBRE DE 2020";
 
 //datos para el componente date
 
-const DATE = "20 de octubre";
+const DATE_EVENT = "sep 1, 2020 00:00:00";
 
-function Template() {
+const DIRECTION = "calle 12 No. 15-19"
+
+export const Template = ({nameEvent, direction, dateEvent, imageEvent, logoEvent, eventDescription, conference, speaker}) => {
+ 
+  
   return (
     <>
       <GlobalStyle />
 
       <TemplateContainer>
-        <Navbar />
+        <Navbar   />
         <SectionSmall
-          sectionName={SECTION_INFO}
+          sectionName={dateEvent || DATE_EVENT}
           style={{ paddingTop: "50px" }}
+          id="inicio"
         />
-        <header >
+         <SectionSmall
+          sectionName={direction || DIRECTION}          
+        />
+
+        {/* Opcional: in-line style for attachment image.
+        style={{background:"URL('https://images.pexels.com/photos/4534200/pexels-photo-4534200.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')",
+        backgroundSize: "cover"}}  */}
+
+        <header>
           <div>
-            <Intro>Gran Evento No te lo puedes perder</Intro>
+           
+            <Intro>
+              {nameEvent || "Gran Evento No te lo puedes perder"}
+              <br/>
+              <img src = {logoEvent || "https://seeklogo.net/wp-content/uploads/2019/01/dji-logo.png"} width = "100px" alt = {nameEvent}/>
+            
+            </Intro>
           </div>
 
           <PrincipalButton />
+          
 
-          <Chronometer typeOfDate={TIPE_OF_DATE} number={NUMBER} />
+          <Chronometer fecha = {dateEvent || DATE_EVENT} />
         </header>
 
         <SectionSmall sectionName="EL EVENTO" style={{ paddingTop: "50px" }} />
 
-        <div>
-          <SuperTitle>EL GRAN EVENTO JAMAS VISTO</SuperTitle>
+        <div >
+          <SuperTitle>{nameEvent || "EL GRAN EVENTO JAMAS VISTO"}</SuperTitle>
 
           <WrapperPrincipalImage>
             <img
-              src="https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-              alt=""
+              src={imageEvent || EVENT_IMAGE}
+              alt={nameEvent}
+              
             />
           </WrapperPrincipalImage>
           <TextDescription>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              nibh dolor, vulputate sed eros sit amet, accumsan pulvinar arcu.
-              Proin vehicula, nisl non lobortis consectetur, libero eros
-              placerat augue, id viverra metus metus eu ante. Duis blandit
-              ullamcorper leo, lobortis semper enim pulvinar quis. In feugiat
-              tortor lacus, a sodales orci sagittis dictum. Etiam finibus urna
-              et pellentesque mattis. Sed interdum, tellus eget sagittis ornare,
-              lorem dolor dictum est, eget tempus ante nisl elementum dui.
-              Integer vestibulum risus sit amet dapibus faucibus. Quisque ac
-              convallis sem.
+            <p >
+              {eventDescription || CONNFERENCE_DESCRIPTION}
             </p>
           </TextDescription>
         </div>
 
         <SectionLarge sectionName="CONFERENCIAS" />
 
-        <Date eventDate={DATE} />
+        <DateTimer eventDate={conference || DATE_EVENT} />
         <ContainerFlexHorizontal>
-          {[1, 2, 3, 4].map((event) => {
+          {[1, 2, 3, 4].map((conferenceInfo) => {
             return (
               <Conference
-                time={TIME}
-                conferenceTitle={CONFERENCE_TITLE}
-                speaker={SPEAKER_CONFERENCE}
-                conferenceDescription={CONNFERENCE_DESCRIPTION}
+                time={conferenceInfo.time || TIME}
+                conferenceTitle={conferenceInfo.title || CONFERENCE_TITLE}
+                speaker={conferenceInfo.speaker || SPEAKER_CONFERENCE}
+                conferenceDescription={conferenceInfo.description || CONNFERENCE_DESCRIPTION}
               />
             );
           })}
@@ -122,34 +135,34 @@ function Template() {
         <SectionLarge sectionName="CONFERENCISTAS" />
 
         <ContainerFlexHorizontal>
-          {[1, 2, 3, 4].map((event) => {
+          {[1, 2, 3, 4].map((speakerInfo) => {
             return (
               <Speaker
-                photo={PHOTO}
-                speaker={SPEAKER}
-                bio={BIO}
-                SpeakerTwiter=""
+                photo={speakerInfo.photo || PHOTO}
+                speaker={speakerInfo.name || SPEAKER}
+                bio={speakerInfo.bio || BIO}
+                SpeakerTwiter={speakerInfo.twiter}
               />
             );
           })}
 
-          <SectionLarge sectionName="SPONSORS" />
+          <SectionLarge sectionName="SPONSORS" id = "/quees" />
 
-          {[1, 2, 3, 4, 5, 6].map((sponsor) => {
+          {[1, 2, 3, 4, 5, 6].map((sponsorInfo) => {
             return (
               <Sponsor
-                sponsorImage={SPONSOR_IMAGE}
-                sponsorTitle={SPONSOR_TITLE}
-                sponsorUrl={SPONSOR_URL}
+                sponsorImage={sponsorInfo.image || SPONSOR_IMAGE}
+                sponsorTitle={sponsorInfo.title || SPONSOR_TITLE}
+                sponsorUrl={sponsorInfo.url || SPONSOR_URL}
               />
             );
           })}
         </ContainerFlexHorizontal>
-
+        {/* Aca voy a poner los componentes de la plantilla de jaime */}
+        
         
       </TemplateContainer>
     </>
   );
-}
 
-export default Template;
+}
